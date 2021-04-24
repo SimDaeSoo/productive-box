@@ -15,7 +15,7 @@ interface IRepo {
   owner: string;
 }
 
-(async() => {
+(async () => {
   /**
    * First, get user id
    */
@@ -40,7 +40,7 @@ interface IRepo {
    * Third, get commit time and parse into commit-time/hour diagram
    */
   const committedTimeResponseMap = await Promise.all(
-    repos.map(({name, owner}) => githubQuery(createCommittedDateQuery(id, name, owner)))
+    repos.map(({ name, owner }) => githubQuery(createCommittedDateQuery(id, name, owner)))
   ).catch(error => console.error(`Unable to get the commit info\n${error}`));
 
   if (!committedTimeResponseMap) return;
@@ -83,9 +83,8 @@ interface IRepo {
     const percent = cur.commits / sum * 100;
     const line = [
       `${cur.label}`.padEnd(10),
-      `${cur.commits.toString().padStart(5)} commits`.padEnd(14),
-      generateBarChart(percent, 16),
-      String(percent.toFixed(1)).padStart(5) + '%',
+      `${cur.commits.toString().padStart(4)} commits`.padEnd(14),
+      generateBarChart(percent, 21)
     ];
 
     return [...prev, line.join(' ')];
